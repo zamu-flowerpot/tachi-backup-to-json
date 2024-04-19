@@ -1,0 +1,125 @@
+syntax = "proto3";
+
+message Category {
+  string name = 1;
+  int32 order =2;
+  int32 flags = 100;
+}
+
+message Chapter {
+  string url = 1;
+  string name = 2;
+  string scanlator = 3;
+  bool read = 4;
+  bool bookmark = 5;
+  int32 lastPageRead = 6;
+  int32 dateFetch = 7;
+  int32 dateUpload = 8;
+  float chapterNumber = 9;
+  int32 sourceOrder = 10;
+  int32 lastModifiedAt = 11;
+  int32 version = 12;
+}
+
+message Tracking {
+  int32 syncId = 1;
+  int32 libraryId = 2;
+  int32 mediaIdInt = 3;
+  string trackingUrl = 4;
+  string title = 5;
+  float lastChapterRead = 6;
+  int32 totalChapters = 7;
+  float score = 8;
+  int32 status = 9;
+  int32 startedReadingDate = 10;
+  int32 finishedReadingDate = 11;
+  int32 mediaId = 100;
+}
+
+message History {
+  string url = 1;
+  int32 lastRead = 2;
+  int32 readDuration = 3;
+}
+
+message BrokenBackupHistory {
+  // string url = 1;
+  int32 lastRead = 1;
+  int32 readDuration = 2;
+}
+
+enum UpdateStrategy {
+  ALWAYS_UPDATE = 0;
+  ONLY_FETCH_ONCE = 1;
+}
+
+message Manga {
+  int32 source = 1;
+  string url = 2;
+  string title = 3;
+  string artist = 4;
+  string author = 5;
+  string description = 6;
+  repeated string genre = 7;
+  int32 status = 8;
+  string thumbnailUrl = 9;
+  int32 dateAdded = 13;
+  int32 viewer = 14;
+  repeated Chapter chapters = 16;
+  repeated Category categories = 17;
+  repeated Tracking tracking = 18;
+  bool favorite = 100;
+  int32 chapterFlags = 101;
+  repeated BrokenBackupHistory brokenHistory = 102;
+  int32 viewer_flags = 103;
+  repeated History history = 104;
+  UpdateStrategy updateStrategy = 105;
+  int32 lastModifiedAt = 106;
+  int32 favoriteModifiedAt = 107;
+  repeated string excludedScanlators = 108;
+  int32 version = 109;
+}
+
+message Source {
+  string name = 1;
+  int32 sourceId = 2;
+}
+
+message BrokenSource {
+  int32 sourceId = 1;
+}
+
+message StringSet {
+  repeated string value = 1;
+}
+
+
+message PreferenceValue {
+  oneof preference_value {
+    int32 int_value = 1;
+    int64 long_value = 2;
+    float float_value = 3;
+    string string_value = 4;
+    bool bool_value = 5;
+    StringSet string_set_value = 6;
+  }
+}
+
+message Preference {
+  string key = 1;
+  PreferenceValue vaule = 2;  
+}
+
+message SourcePreferences {
+  string sourceKey = 1;
+  repeated Preference prefs = 2;
+}
+
+message Backup {
+  repeated Manga Manga = 1;
+  repeated Category Categories = 2;
+  repeated BrokenSource BrokenSources = 100;
+  repeated Source Sources = 101;
+  repeated Preference Preferences = 104;
+  repeated SourcePreferences SourcePreferences = 105;
+}

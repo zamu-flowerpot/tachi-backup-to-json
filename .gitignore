@@ -1,0 +1,9 @@
+*
+!.gitignore
+!README.md
+!tachi/
+!tachi/**/
+!tachi/**/*.py
+!script.py
+!tachi.proto
+!requirements.txt
